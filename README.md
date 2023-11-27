@@ -7,7 +7,7 @@ Hello Godotneers! Thank you very much for watching this video. This repository c
 
 ## Additional material
 
-Be sure to also check the [article on saved game compatiblity](https://raw.githubusercontent.com/godotneers/saving-loading-video/godotneers-ensuring-saved-game-compatibility.pdf), it contains a lot of useful strategies to ensure your saved games are compatible across different versions of your game.
+Be sure to also check the [article on saved game compatiblity](https://raw.githubusercontent.com/godotneers/saving-loading-video/main/godotneers-ensuring-saved-game-compatibility.pdf), it contains a lot of useful strategies to ensure your saved games are compatible across different versions of your game.
 
 
 ## License
