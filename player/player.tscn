@@ -1,0 +1,87 @@
+[gd_scene load_steps=16 format=3 uid="uid://dt42gugmqq28j"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_out1h"]
+[ext_resource type="Texture2D" uid="uid://dquwarjqwltkk" path="res://player/submarine.png" id="2_jwb4p"]
+[ext_resource type="PackedScene" uid="uid://bt11i1i0lkiw3" path="res://player_projectile/projectile.tscn" id="2_ss62b"]
+[ext_resource type="Shader" path="res://player/health_indicator.gdshader" id="3_1j2au"]
+[ext_resource type="PackedScene" uid="uid://dvihgltjn3xty" path="res://movement_particles/movement_particles.tscn" id="3_h342r"]
+[ext_resource type="Script" path="res://fish/shader_control.gd" id="5_qguf3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1fc3"]
+shader = ExtResource("3_1j2au")
+shader_parameter/health_percent = 0.395
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k227k"]
+radius = 49.75
+height = 242.5
+
+[sub_resource type="Gradient" id="Gradient_ot4t6"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p1afh"]
+gradient = SubResource("Gradient_ot4t6")
+
+[sub_resource type="Curve" id="Curve_8yyqn"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0.00598802, 200), 0.0, -30.2536, 0, 0, Vector2(0.431138, -12.5), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_417bp"]
+curve = SubResource("Curve_8yyqn")
+
+[sub_resource type="Curve" id="Curve_gb13t"]
+_data = [Vector2(0, 0.380208), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_d41hf"]
+curve = SubResource("Curve_gb13t")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d053g"]
+resource_local_to_scene = true
+lifetime_randomness = 0.33
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 63.23
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 10.53
+initial_velocity_max = 52.64
+angular_velocity_min = -181.89
+angular_velocity_max = 227.37
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_curve = SubResource("CurveTexture_417bp")
+scale_min = 0.215
+scale_max = 0.315
+scale_curve = SubResource("CurveTexture_d41hf")
+color_ramp = SubResource("GradientTexture1D_p1afh")
+
+[node name="Player" type="CharacterBody2D" groups=["camera_target", "player"]]
+rotation = 1.5708
+script = ExtResource("1_out1h")
+max_health = 200.0
+ammo = ExtResource("2_ss62b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_y1fc3")
+rotation = -1.5708
+scale = Vector2(0.272365, 0.272365)
+texture = ExtResource("2_jwb4p")
+script = ExtResource("5_qguf3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.75, -1.25)
+shape = SubResource("CapsuleShape2D_k227k")
+
+[node name="MovementParticles" parent="." instance=ExtResource("3_h342r")]
+position = Vector2(-0.999603, 109)
+rotation = -1.57079
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_d053g")
+size_min = 0.215
+size_max = 0.315
+
+[node name="ProjectileSpawnPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -160)

@@ -1,0 +1,157 @@
+[gd_scene load_steps=16 format=3 uid="uid://6ydtqgm8mfqb"]
+
+[ext_resource type="PackedScene" uid="uid://d11vwcdb8m2ko" path="res://light_cone/light_cone.tscn" id="1_2r5cp"]
+[ext_resource type="Script" path="res://level_exit/level_exit.gd" id="1_d4hnl"]
+[ext_resource type="Shader" path="res://light_cone/cone.gdshader" id="2_0hg5p"]
+[ext_resource type="Texture2D" uid="uid://cmifejtnmlr67" path="res://level_exit/exit_sign.png" id="3_khddq"]
+[ext_resource type="Script" path="res://delayed_detector/delayed_detector.gd" id="5_osvk3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o547e"]
+resource_local_to_scene = true
+shader = ExtResource("2_0hg5p")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ccoj"]
+resource_local_to_scene = true
+shader = ExtResource("2_0hg5p")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0opgs"]
+resource_local_to_scene = true
+shader = ExtResource("2_0hg5p")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_usekp"]
+resource_local_to_scene = true
+shader = ExtResource("2_0hg5p")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8g0nt"]
+resource_local_to_scene = true
+shader = ExtResource("2_0hg5p")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m75by"]
+resource_local_to_scene = true
+shader = ExtResource("2_0hg5p")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_c4cd2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../LightConeRoot2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.40341]
+}
+
+[sub_resource type="Animation" id="Animation_lk08a"]
+resource_name = "rotate"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../LightConeRoot2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_620q4"]
+_data = {
+"RESET": SubResource("Animation_c4cd2"),
+"rotate": SubResource("Animation_lk08a")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3y2f2"]
+resource_local_to_scene = true
+radius = 139.743
+
+[node name="LevelExit" type="Node2D" groups=["level_exit"]]
+script = ExtResource("1_d4hnl")
+
+[node name="LightConeRoot" type="Node2D" parent="."]
+rotation = 1.16238
+
+[node name="LightCone" parent="LightConeRoot" instance=ExtResource("1_2r5cp")]
+material = SubResource("ShaderMaterial_o547e")
+position = Vector2(139.729, 1.61257)
+scale = Vector2(64, 256)
+
+[node name="LightCone2" parent="LightConeRoot" instance=ExtResource("1_2r5cp")]
+material = SubResource("ShaderMaterial_1ccoj")
+position = Vector2(-71.8767, 113.349)
+rotation = 0.541052
+scale = Vector2(64, 256)
+
+[node name="LightCone3" parent="LightConeRoot" instance=ExtResource("1_2r5cp")]
+material = SubResource("ShaderMaterial_0opgs")
+position = Vector2(-67.2145, -120.342)
+rotation = 2.61799
+scale = Vector2(64, 256)
+
+[node name="LightConeRoot2" type="Node2D" parent="."]
+rotation = 4.40341
+
+[node name="LightCone" parent="LightConeRoot2" instance=ExtResource("1_2r5cp")]
+material = SubResource("ShaderMaterial_usekp")
+position = Vector2(85.8969, 2.13569)
+scale = Vector2(32, 150)
+
+[node name="LightCone2" parent="LightConeRoot2" instance=ExtResource("1_2r5cp")]
+material = SubResource("ShaderMaterial_8g0nt")
+position = Vector2(-49.7137, 73.8475)
+rotation = 0.541052
+scale = Vector2(32, 150)
+
+[node name="LightCone3" parent="LightConeRoot2" instance=ExtResource("1_2r5cp")]
+material = SubResource("ShaderMaterial_m75by")
+position = Vector2(-42.8128, -74.9953)
+rotation = 2.61799
+scale = Vector2(32, 150)
+
+[node name="ExitSign" type="Sprite2D" parent="."]
+scale = Vector2(0.238224, 0.238224)
+texture = ExtResource("3_khddq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../LightConeRoot")
+libraries = {
+"": SubResource("AnimationLibrary_620q4")
+}
+
+[node name="DetectionArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+monitoring = false
+monitorable = false
+script = ExtResource("5_osvk3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_3y2f2")
+
+[connection signal="ready" from="." to="AnimationPlayer" method="play" binds= ["rotate"]]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

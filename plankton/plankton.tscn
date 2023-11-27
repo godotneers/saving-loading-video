@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://mk3lbwd4lpb5"]
+
+[ext_resource type="Texture2D" uid="uid://b3y4hicwkv762" path="res://plankton/plankton_blob.png" id="1_l4iwk"]
+
+[sub_resource type="Gradient" id="Gradient_3xtk0"]
+offsets = PackedFloat32Array(0, 0.292593, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nunsy"]
+gradient = SubResource("Gradient_3xtk0")
+
+[sub_resource type="Curve" id="Curve_qfk8w"]
+_data = [Vector2(0.0239521, 0.598958), 0.0, 0.0, 0, 0, Vector2(0.311377, 0.953125), 0.0, 0.0, 0, 0, Vector2(0.736527, 0.838542), 0.0, 0.0, 0, 0, Vector2(0.988024, 0.369792), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_ekwfx"]
+curve = SubResource("Curve_qfk8w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gukr5"]
+emission_shape = 3
+emission_box_extents = Vector3(5000, 1500, 0)
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = -3.0
+initial_velocity_max = 8.0
+angular_velocity_min = -8.0
+angular_velocity_max = 9.19
+orbit_velocity_min = -0.01
+orbit_velocity_max = 0.01
+damping_min = 1.053
+damping_max = 8.421
+scale_min = 0.4
+scale_max = 1.9
+scale_curve = SubResource("CurveTexture_ekwfx")
+color_ramp = SubResource("GradientTexture1D_nunsy")
+turbulence_enabled = true
+turbulence_noise_strength = 0.0
+turbulence_influence_min = 0.38
+turbulence_influence_max = 0.38
+turbulence_initial_displacement_min = -6.3
+turbulence_initial_displacement_max = 27.4
+
+[node name="Plankton" type="GPUParticles2D"]
+process_mode = 3
+visible = false
+position = Vector2(961, 545)
+amount = 150
+process_material = SubResource("ParticleProcessMaterial_gukr5")
+texture = ExtResource("1_l4iwk")
+lifetime = 13.0
+preprocess = 5.0
+randomness = 0.62
+metadata/_edit_lock_ = true

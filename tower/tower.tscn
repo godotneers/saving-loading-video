@@ -1,0 +1,238 @@
+[gd_scene load_steps=22 format=3 uid="uid://dwxl8elj3d5gj"]
+
+[ext_resource type="Script" path="res://tower/tower.gd" id="1_3eceo"]
+[ext_resource type="PackedScene" uid="uid://bb1if1fbcr7f4" path="res://tower_projectile/projectile.tscn" id="2_rjrxu"]
+[ext_resource type="Shader" path="res://tower/health_indicator.gdshader" id="3_ipdor"]
+[ext_resource type="Texture2D" uid="uid://5hdhq0mnmawx" path="res://tower/sphere.png" id="3_m4lar"]
+[ext_resource type="Texture2D" uid="uid://ctd44e5ku42cy" path="res://shared_assets/one_pixel.png" id="4_3lijr"]
+[ext_resource type="PackedScene" uid="uid://d11vwcdb8m2ko" path="res://light_cone/light_cone.tscn" id="5_r7nbw"]
+[ext_resource type="Shader" path="res://light_cone/cone.gdshader" id="6_ledcd"]
+[ext_resource type="Texture2D" uid="uid://bjty65c32jxhq" path="res://movement_particles/bubble.png" id="7_3skka"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ywm8n"]
+resource_local_to_scene = true
+shader = ExtResource("3_ipdor")
+shader_parameter/thickness = 0.055
+shader_parameter/progress = 1.0
+shader_parameter/opacity = 0.29
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6683l"]
+radius = 64.0703
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2jbhr"]
+resource_local_to_scene = true
+shader = ExtResource("6_ledcd")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_nuf6p"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hst4n"]
+gradient = SubResource("Gradient_nuf6p")
+
+[sub_resource type="Curve" id="Curve_og54h"]
+_data = [Vector2(0, 0.380208), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wof2h"]
+curve = SubResource("Curve_og54h")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f7sj2"]
+lifetime_randomness = 0.33
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 20.52
+initial_velocity_max = 75.43
+angular_velocity_min = -181.89
+angular_velocity_max = 227.37
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.6
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_wof2h")
+color_ramp = SubResource("GradientTexture1D_hst4n")
+
+[sub_resource type="Animation" id="Animation_fv5sh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightCone:material:shader_parameter/modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sphere:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sphere:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ExplosionParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_0l7em"]
+resource_name = "explode"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightCone:material:shader_parameter/modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sphere:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 1.4, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sphere:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.7, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ExplosionParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_yl8ow"]
+resource_name = "startup"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightCone:material:shader_parameter/modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.6, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lhm24"]
+_data = {
+"RESET": SubResource("Animation_fv5sh"),
+"explode": SubResource("Animation_0l7em"),
+"startup": SubResource("Animation_yl8ow")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wo5b2"]
+radius = 987.051
+
+[node name="Tower" type="StaticBody2D" groups=["clean_on_load", "game_events", "influences_score", "tower"]]
+collision_layer = 4
+script = ExtResource("1_3eceo")
+ammo = ExtResource("2_rjrxu")
+max_health = 100.0
+
+[node name="HealthIndicator" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ywm8n")
+position = Vector2(-2, 0)
+scale = Vector2(169, 169)
+texture = ExtResource("4_3lijr")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-2, 0)
+shape = SubResource("CircleShape2D_6683l")
+metadata/_edit_lock_ = true
+
+[node name="LightCone" parent="." instance=ExtResource("5_r7nbw")]
+material = SubResource("ShaderMaterial_2jbhr")
+
+[node name="Sphere" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_m4lar")
+
+[node name="AmmoSpawnPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(74, -1)
+
+[node name="ExplosionParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_f7sj2")
+texture = ExtResource("7_3skka")
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.28
+fixed_fps = 60
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_lhm24")
+}
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_wo5b2")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_enemy_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_enemy_exited"]

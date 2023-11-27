@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dk3cdmmwsb57l"]
+
+[ext_resource type="Shader" path="res://pause_screen/grayscale_postprocess.gdshader" id="1_djina"]
+[ext_resource type="Texture2D" uid="uid://ctd44e5ku42cy" path="res://shared_assets/one_pixel.png" id="2_yuttr"]
+[ext_resource type="FontFile" uid="uid://cx27tcro6r2q7" path="res://shared_assets/art_deco_font.ttf" id="3_j685c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vp03q"]
+shader = ExtResource("1_djina")
+
+[node name="PauseScreen" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_vp03q")
+layout_mode = 2
+texture = ExtResource("2_yuttr")
+
+[node name="PauseLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("3_j685c")
+theme_override_font_sizes/font_size = 127
+text = "Paused"
+horizontal_alignment = 1

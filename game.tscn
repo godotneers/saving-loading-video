@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3 uid="uid://djr4gxcdxrgc8"]
+
+[ext_resource type="PackedScene" uid="uid://dt42gugmqq28j" path="res://player/player.tscn" id="1_6b83d"]
+[ext_resource type="Script" path="res://game.gd" id="1_l5r35"]
+[ext_resource type="Script" path="res://world_root/world_root.gd" id="3_ay4xh"]
+[ext_resource type="PackedScene" uid="uid://co3jn3ck5jb1m" path="res://levels/level_1.tscn" id="3_lfwqq"]
+[ext_resource type="PackedScene" uid="uid://dk3cdmmwsb57l" path="res://pause_screen/pause_screen.tscn" id="5_7yult"]
+[ext_resource type="FontFile" uid="uid://cx27tcro6r2q7" path="res://shared_assets/art_deco_font.ttf" id="5_t1l8g"]
+[ext_resource type="Script" path="res://saver_loader/saver_loader.gd" id="7_rrrf1"]
+
+[node name="Game" type="Node2D"]
+process_mode = 3
+position = Vector2(-25, -4)
+script = ExtResource("1_l5r35")
+
+[node name="WorldRoot" type="Node2D" parent="."]
+unique_name_in_owner = true
+process_mode = 1
+script = ExtResource("3_ay4xh")
+
+[node name="Level1" parent="WorldRoot" instance=ExtResource("3_lfwqq")]
+
+[node name="Player" parent="WorldRoot" groups=["world_root_no_touch"] instance=ExtResource("1_6b83d")]
+unique_name_in_owner = true
+process_mode = 1
+position = Vector2(412, 510)
+collision_mask = 6
+speed = 300.0
+world_root = NodePath("..")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -122.0
+offset_top = -109.0
+offset_right = 122.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("5_t1l8g")
+theme_override_font_sizes/font_size = 48
+text = "Save"
+
+[node name="LoadButton" type="Button" parent="UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("5_t1l8g")
+theme_override_font_sizes/font_size = 48
+text = "Load"
+
+[node name="PauseScreen" parent="UI" instance=ExtResource("5_7yult")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Utilities" type="Node" parent="."]
+
+[node name="SaverLoader" type="Node" parent="Utilities"]
+unique_name_in_owner = true
+script = ExtResource("7_rrrf1")
+
+[connection signal="exit_reached" from="WorldRoot/Level1" to="." method="_on_level_exit_reached"]
+[connection signal="pressed" from="UI/MarginContainer/HBoxContainer/SaveButton" to="." method="_on_save_game"]
+[connection signal="pressed" from="UI/MarginContainer/HBoxContainer/LoadButton" to="." method="_on_load_game"]

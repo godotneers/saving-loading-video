@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://bcurds8d7gm8l"]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_efrk8"]
+[ext_resource type="Texture2D" uid="uid://ctd44e5ku42cy" path="res://shared_assets/one_pixel.png" id="2_cuyle"]
+[ext_resource type="PackedScene" uid="uid://cf0svghvb3d78" path="res://spawn_point/spawn_point.tscn" id="3_stnc2"]
+[ext_resource type="PackedScene" uid="uid://mk3lbwd4lpb5" path="res://plankton/plankton.tscn" id="3_uxxkp"]
+[ext_resource type="PackedScene" uid="uid://b5qgw8ps41nq2" path="res://camera/camera.tscn" id="4_hvit4"]
+[ext_resource type="PackedScene" uid="uid://6ydtqgm8mfqb" path="res://level_exit/level_exit.tscn" id="6_8t02t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6sotd"]
+size = Vector2(4764, 135)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8khbb"]
+size = Vector2(184, 1279.5)
+
+[node name="Level0" type="Node2D"]
+script = ExtResource("1_efrk8")
+next_level = "res://levels/level_1.tscn"
+
+[node name="BG" type="Sprite2D" parent="."]
+modulate = Color(0.0470588, 0.00392157, 0.117647, 1)
+position = Vector2(2005, 586)
+scale = Vector2(5000, 2000)
+texture = ExtResource("2_cuyle")
+metadata/_edit_lock_ = true
+
+[node name="SpawnPoint" parent="." instance=ExtResource("3_stnc2")]
+position = Vector2(230, 563)
+
+[node name="Plankton" parent="." instance=ExtResource("3_uxxkp")]
+visible = true
+position = Vector2(1981, 602)
+amount = 500
+visibility_rect = Rect2(-2500, -750, 5000, 1500)
+
+[node name="UpperBlock" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBlock"]
+position = Vector2(2001, -57.5)
+shape = SubResource("RectangleShape2D_6sotd")
+
+[node name="LowerBlock" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerBlock"]
+position = Vector2(1997, 1150)
+shape = SubResource("RectangleShape2D_6sotd")
+
+[node name="LeftBlock" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBlock"]
+position = Vector2(-101, 566)
+shape = SubResource("RectangleShape2D_8khbb")
+
+[node name="RightBlock" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBlock"]
+position = Vector2(1929, 537)
+shape = SubResource("RectangleShape2D_8khbb")
+
+[node name="Camera" parent="." instance=ExtResource("4_hvit4")]
+
+[node name="LevelExit" parent="." instance=ExtResource("6_8t02t")]
+position = Vector2(1584, 550)

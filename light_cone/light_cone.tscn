@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://d11vwcdb8m2ko"]
+
+[ext_resource type="Shader" path="res://light_cone/cone.gdshader" id="1_bua8e"]
+[ext_resource type="Texture2D" uid="uid://ctd44e5ku42cy" path="res://shared_assets/one_pixel.png" id="2_fy2ly"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gaq3j"]
+resource_local_to_scene = true
+shader = ExtResource("1_bua8e")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+
+[node name="LightCone" type="Sprite2D"]
+material = SubResource("ShaderMaterial_gaq3j")
+position = Vector2(234, 0)
+rotation = -1.5708
+scale = Vector2(256, 512)
+texture = ExtResource("2_fy2ly")

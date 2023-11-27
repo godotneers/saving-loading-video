@@ -1,0 +1,181 @@
+[gd_scene load_steps=18 format=3 uid="uid://b67uxcsmxaqqi"]
+
+[ext_resource type="Script" path="res://fish/fish.gd" id="1_6ahu8"]
+[ext_resource type="Shader" path="res://fish/fish.gdshader" id="2_elrrs"]
+[ext_resource type="Texture2D" uid="uid://dnntm1mgk2r6d" path="res://fish/fish.png" id="2_mjo2s"]
+[ext_resource type="Texture2D" uid="uid://bjty65c32jxhq" path="res://movement_particles/bubble.png" id="4_a60dk"]
+[ext_resource type="Script" path="res://fish/shader_control.gd" id="4_y68b4"]
+[ext_resource type="Script" path="res://delayed_detector/delayed_detector.gd" id="5_fk5ku"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xapgh"]
+shader = ExtResource("2_elrrs")
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/time_scale = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_avlye"]
+radius = 73.9999
+height = 165.997
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2egbw"]
+radius = 394.138
+
+[sub_resource type="Animation" id="Animation_wwab5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.347656, 0.3125)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ExplosionParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_cfh4d"]
+resource_name = "explode"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ExplosionParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 0.0312499),
+"update": 0,
+"values": [Vector2(0.347656, 0.3125), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i74i6"]
+_data = {
+"RESET": SubResource("Animation_wwab5"),
+"explode": SubResource("Animation_cfh4d")
+}
+
+[sub_resource type="Gradient" id="Gradient_dfpea"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4yff5"]
+gradient = SubResource("Gradient_dfpea")
+
+[sub_resource type="Curve" id="Curve_ne7hk"]
+_data = [Vector2(0, 0.380208), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_svkju"]
+curve = SubResource("Curve_ne7hk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5kgx0"]
+lifetime_randomness = 0.33
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 62.63
+initial_velocity_max = 138.59
+angular_velocity_min = -181.89
+angular_velocity_max = 227.37
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.3
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_svkju")
+color_ramp = SubResource("GradientTexture1D_4yff5")
+
+[node name="Fish" type="CharacterBody2D" groups=["enemy", "game_events"]]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_6ahu8")
+speed = 150.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+material = SubResource("ShaderMaterial_xapgh")
+scale = Vector2(0.347656, 0.3125)
+texture = ExtResource("2_mjo2s")
+flip_h = true
+script = ExtResource("4_y68b4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.56926
+shape = SubResource("CapsuleShape2D_avlye")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+script = ExtResource("5_fk5ku")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_2egbw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_i74i6")
+}
+
+[node name="ExplosionParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 250
+process_material = SubResource("ParticleProcessMaterial_5kgx0")
+texture = ExtResource("4_a60dk")
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.88
+fixed_fps = 60
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
