@@ -17,15 +17,12 @@ func save_game():
 	
 	saved_game.saved_data = saved_data
 	
-	var json = JSON.new()
-	json.data = saved_game
-	
-	var narf = ResourceSaver.save(json, "user://savegame.json")
-	print(narf)
+	ResourceSaver.save(saved_game, "user://savegame.tres")
+
 	
 	
 func load_game():
-	var fixed_path = PathFixer.fix_paths("user://savegame.json")
+	var fixed_path = PathFixer.fix_paths("user://savegame.tres")
 	print("Loading from ", fixed_path )
 	
 	var saved_game:SavedGame = SafeResourceLoader.load(fixed_path) as SavedGame
@@ -33,6 +30,7 @@ func load_game():
 		return
 	
 	_player.global_position = saved_game.player_position
+	# verify player health
 	_player.health = min(saved_game.player_health, 200)
 	
 	get_tree().call_group("game_events", "on_before_load_game")

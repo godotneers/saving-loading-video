@@ -2,8 +2,6 @@ class_name PathFixer
 
 ## This holds a dictionary of paths to replace in the input file
 const Mappings = {
-	"res://fish/saved_fish_data.gd" : "res://unused_data/unused_data.gd",
-	"res://fish/fish.tscn" : "res://fish/fish2.tscn"
 }
 
 ## Fixes paths referenced in the input file. Writes
