@@ -8,30 +8,6 @@ extends CharacterBody2D
 var _target:Node2D
 var _dying:bool = false
 
-func on_save_game(saved_data:Array[SavedData]):
-	if _dying:
-		return
-		
-	var my_data = SavedFishData.new()
-	my_data.position = global_position
-	my_data.scene_path = scene_file_path
-	my_data.scale = scale
-	saved_data.append(my_data)
-
-
-func on_before_load_game():
-	get_parent().remove_child(self)
-	queue_free()
-	
-	
-func on_load_game(saved_data:SavedData):
-	global_position = saved_data.position
-	
-	if saved_data is SavedFishData:
-		var my_data = saved_data as SavedFishData
-		scale = my_data.scale
-
-
 func _physics_process(_delta):
 	if not is_instance_valid(_target) or _dying:
 		return

@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dt42gugmqq28j" path="res://player/player.tscn" id="1_6b83d"]
 [ext_resource type="Script" path="res://game.gd" id="1_l5r35"]
 [ext_resource type="Script" path="res://world_root/world_root.gd" id="3_ay4xh"]
-[ext_resource type="PackedScene" uid="uid://co3jn3ck5jb1m" path="res://levels/level_1.tscn" id="3_lfwqq"]
+[ext_resource type="PackedScene" uid="uid://bcurds8d7gm8l" path="res://levels/level_0.tscn" id="4_cs208"]
 [ext_resource type="PackedScene" uid="uid://dk3cdmmwsb57l" path="res://pause_screen/pause_screen.tscn" id="5_7yult"]
 [ext_resource type="FontFile" uid="uid://cx27tcro6r2q7" path="res://shared_assets/art_deco_font.ttf" id="5_t1l8g"]
 [ext_resource type="Script" path="res://saver_loader/saver_loader.gd" id="7_rrrf1"]
@@ -18,7 +18,7 @@ unique_name_in_owner = true
 process_mode = 1
 script = ExtResource("3_ay4xh")
 
-[node name="Level1" parent="WorldRoot" instance=ExtResource("3_lfwqq")]
+[node name="Level0" parent="WorldRoot" instance=ExtResource("4_cs208")]
 
 [node name="Player" parent="WorldRoot" groups=["world_root_no_touch"] instance=ExtResource("1_6b83d")]
 unique_name_in_owner = true
@@ -73,6 +73,6 @@ visible = false
 unique_name_in_owner = true
 script = ExtResource("7_rrrf1")
 
-[connection signal="exit_reached" from="WorldRoot/Level1" to="." method="_on_level_exit_reached"]
+[connection signal="exit_reached" from="WorldRoot/Level0" to="." method="_on_level_exit_reached"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/SaveButton" to="." method="_on_save_game"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/LoadButton" to="." method="_on_load_game"]

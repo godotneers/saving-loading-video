@@ -9,32 +9,10 @@ var direction:Vector2 = Vector2.ONE
 var _dying:bool = false
 
 
-func on_save_game(saved_data:Array[SavedData]):
-	if _dying:
-		return
-		
-	var my_data = SavedTorpedoData.new()
-	my_data.position = global_position
-	my_data.scene_path = scene_file_path
-	my_data.direction = direction
-	saved_data.append(my_data)
-
-
-func on_before_load_game():
-	get_parent().remove_child(self)
-	queue_free()
-
-	
-func on_load_game(saved_data:SavedData):
-	var my_data = saved_data as SavedTorpedoData
-	global_position = my_data.position
-	direction = my_data.direction
-	look_at(global_position + direction)
-	
-
 func _ready():
 	direction = direction.normalized()
 	look_at(global_position + direction)
+
 
 func _physics_process(delta):
 	if _dying:
