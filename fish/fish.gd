@@ -31,10 +31,7 @@ func _physics_process(_delta):
 
 
 func take_damage(_damage:float):
-	if scale.x < 1:
-		_die()
-	else:
-		scale = Vector2(0.5, 0.5)
+	_die()
 		
 		
 func _die():
