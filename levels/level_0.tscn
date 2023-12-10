@@ -13,7 +13,7 @@ size = Vector2(4764, 135)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8khbb"]
 size = Vector2(184, 1279.5)
 
-[node name="Level0" type="Node2D"]
+[node name="Level0" type="Node2D" groups=["level"]]
 script = ExtResource("1_efrk8")
 next_level = "res://levels/level_1.tscn"
 

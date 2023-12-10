@@ -36,4 +36,12 @@ func load_level_async(path:String):
 func _on_level_exit_reached(next_level:String):
 	level_exit_reached.emit(next_level)
 
-
+## 	returns the path to the currently loaded level
+func get_current_level_path():
+	# find the first node in the level group and return its scene path
+	for node in get_tree().get_nodes_in_group("level"):
+		return node.scene_file_path
+		
+	# if we have no level push an error (shouldn't really happen)
+	push_error("currently no level is loaded")
+	return "res://invalid.tscn"

@@ -1,8 +1,5 @@
 extends Node2D
 
-# emitted when the player earns score by hitting this
-signal score_earned(score:int)
-
 @export var ammo:PackedScene
 @export var cooldown:float = 2.5
 @export var max_health:float = 300
@@ -21,13 +18,42 @@ signal score_earned(score:int)
 		
 
 var _cooldown:float = 0
-var _is_dying:bool = false
+var _dying:bool = false
 var _current_enemy:Node2D = null
 var _last_enemy_position:Vector2
 
 
+func on_save_game(saved_data:Array[SavedData]):
+	if _dying:
+		return
+		
+	var my_data = SavedTowerData.new()
+	my_data.position = global_position
+	my_data.scene_path = scene_file_path
+	my_data.rotation = rotation
+	my_data.health = _health
+	my_data.cooldown = _cooldown
+	saved_data.append(my_data)
+
+
+func on_before_load_game():
+	get_parent().remove_child(self)
+	queue_free()
+	
+	
+func on_load_game(saved_data:SavedData):
+	global_position = saved_data.position
+	
+	if saved_data is SavedTowerData:
+		var my_data = saved_data as SavedTowerData
+		_health = my_data.health
+		rotation = my_data.rotation
+		_cooldown = my_data.cooldown
+		# health indicator does not rotate with us
+		_health_indicator.global_rotation = 0
+
 func take_damage(amount:float):
-	if _is_dying:
+	if _dying:
 		return
 	
 	_health -= amount
@@ -47,7 +73,7 @@ func _ready():
 	
 
 func _physics_process(delta):
-	if _is_dying:
+	if _dying:
 		return
 	
 	_cooldown -= delta
@@ -88,10 +114,9 @@ func _physics_process(delta):
 	
 	_cooldown = cooldown
 
-## Plays the death animation and awards points.
+## Plays the death animation 
 func _die():
-	_is_dying = true
-	score_earned.emit(points)
+	_dying = true
 	_collision_shape.set_deferred("disabled", true)
 	_animation_player.play("explode")
 	await _animation_player.animation_finished

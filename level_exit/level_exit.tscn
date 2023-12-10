@@ -6,32 +6,32 @@
 [ext_resource type="Texture2D" uid="uid://cmifejtnmlr67" path="res://level_exit/exit_sign.png" id="3_khddq"]
 [ext_resource type="Script" path="res://delayed_detector/delayed_detector.gd" id="5_osvk3"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_o547e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vt64g"]
 resource_local_to_scene = true
 shader = ExtResource("2_0hg5p")
 shader_parameter/modulate = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ccoj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1phdr"]
 resource_local_to_scene = true
 shader = ExtResource("2_0hg5p")
 shader_parameter/modulate = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0opgs"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_agrg4"]
 resource_local_to_scene = true
 shader = ExtResource("2_0hg5p")
 shader_parameter/modulate = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_usekp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_53722"]
 resource_local_to_scene = true
 shader = ExtResource("2_0hg5p")
 shader_parameter/modulate = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8g0nt"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0mfx8"]
 resource_local_to_scene = true
 shader = ExtResource("2_0hg5p")
 shader_parameter/modulate = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m75by"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1e14y"]
 resource_local_to_scene = true
 shader = ExtResource("2_0hg5p")
 shader_parameter/modulate = Color(1, 1, 1, 1)
@@ -94,21 +94,21 @@ radius = 139.743
 script = ExtResource("1_d4hnl")
 
 [node name="LightConeRoot" type="Node2D" parent="."]
-rotation = 1.16238
+rotation = 0.628208
 
 [node name="LightCone" parent="LightConeRoot" instance=ExtResource("1_2r5cp")]
-material = SubResource("ShaderMaterial_o547e")
+material = SubResource("ShaderMaterial_vt64g")
 position = Vector2(139.729, 1.61257)
 scale = Vector2(64, 256)
 
 [node name="LightCone2" parent="LightConeRoot" instance=ExtResource("1_2r5cp")]
-material = SubResource("ShaderMaterial_1ccoj")
+material = SubResource("ShaderMaterial_1phdr")
 position = Vector2(-71.8767, 113.349)
 rotation = 0.541052
 scale = Vector2(64, 256)
 
 [node name="LightCone3" parent="LightConeRoot" instance=ExtResource("1_2r5cp")]
-material = SubResource("ShaderMaterial_0opgs")
+material = SubResource("ShaderMaterial_agrg4")
 position = Vector2(-67.2145, -120.342)
 rotation = 2.61799
 scale = Vector2(64, 256)
@@ -117,18 +117,18 @@ scale = Vector2(64, 256)
 rotation = 4.40341
 
 [node name="LightCone" parent="LightConeRoot2" instance=ExtResource("1_2r5cp")]
-material = SubResource("ShaderMaterial_usekp")
+material = SubResource("ShaderMaterial_53722")
 position = Vector2(85.8969, 2.13569)
 scale = Vector2(32, 150)
 
 [node name="LightCone2" parent="LightConeRoot2" instance=ExtResource("1_2r5cp")]
-material = SubResource("ShaderMaterial_8g0nt")
+material = SubResource("ShaderMaterial_0mfx8")
 position = Vector2(-49.7137, 73.8475)
 rotation = 0.541052
 scale = Vector2(32, 150)
 
 [node name="LightCone3" parent="LightConeRoot2" instance=ExtResource("1_2r5cp")]
-material = SubResource("ShaderMaterial_m75by")
+material = SubResource("ShaderMaterial_1e14y")
 position = Vector2(-42.8128, -74.9953)
 rotation = 2.61799
 scale = Vector2(32, 150)
